@@ -1,5 +1,6 @@
 import { EventHandler } from "src/account/application/core/handler/event.handler";
 import { DepositUseCaseInterface } from "src/account/domain/core/action/deposit-use-case.interface";
+import { WithdrawUseCaseInterface } from "src/account/domain/core/action/withdraw-use-case.interface";
 import { EventHandlerInterface } from "src/account/domain/core/handler/event-handler.interface";
 
 
@@ -8,16 +9,21 @@ describe('EventHandler', () => {
 
     let eventHandler: EventHandlerInterface;
     let depositUseCase: DepositUseCaseInterface;
+    let withdrawUseCase: WithdrawUseCaseInterface;
     beforeEach(() => {
 
         depositUseCase = {
             execute: jest.fn(),
         };
 
-        eventHandler = new EventHandler(depositUseCase);
+        withdrawUseCase = {
+            execute: jest.fn(),
+        };
+
+        eventHandler = new EventHandler(depositUseCase, withdrawUseCase);
     });
 
-    it('Should handle event', () => {
+    it('Should handle deposit event', () => {
         const event = {
             type: 'deposit',
             destination: '1',
@@ -29,6 +35,16 @@ describe('EventHandler', () => {
         expect(depositUseCase.execute).toHaveBeenCalledWith(event);
     })
 
+    it('Should handle withdraw event', () => {
+        const event = {
+            type: 'withdraw',
+            origin: '1',
+            amount: 50,
+        };
+
+        eventHandler.processEvent(event);
+        expect(withdrawUseCase.execute).toHaveBeenCalledWith(event);
+    });
 
     it('Should throw error for unknown event type', async () => {
         const event = {

@@ -2,7 +2,6 @@ import { DepositValidator } from "src/account/application/core/validator/deposit
 import { DepositValidatorInterface } from "src/account/domain/core/validator/deposit-validator.interface";
 
 
-
 describe('DepositValidator', () => {
 
     let depositValidator: DepositValidatorInterface;
