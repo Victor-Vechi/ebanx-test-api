@@ -71,9 +71,28 @@ describe('AccountRepository', () => {
             return callback(prisma);
         });
 
-        const result = await accountRepository.save(accounts);
+        const result = await accountRepository.saveAll(accounts);
         expect(prismaMock.$transaction).toHaveBeenCalled();
         expect(result).toEqual(accounts);
+    })
+
+    it('Should save account', async () => {
+        const account: Account = {
+            id: "1",
+            balance: 100,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+
+        prismaMock.account.upsert = jest.fn().mockResolvedValue(account);
+
+        const result = await accountRepository.save(account);
+        expect(prismaMock.account.upsert).toHaveBeenCalledWith({
+            where: { id: account.id },
+            update: account,
+            create: account,
+        });
+        expect(result).toEqual(account);
     })
 
     it('Should reset account table', async () => {

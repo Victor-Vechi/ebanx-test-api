@@ -29,12 +29,12 @@ export class DepositUseCase implements DepositUseCaseInterface {
                 createdAt: new Date(),
                 updatedAt: new Date(),
             };
-            await this.accountRepository.save([account]);
+            await this.accountRepository.save(account);
         }
 
         account = this.accountTransaction.deposit(account, event.amount);
 
-        await this.accountRepository.save([account]);
+        await this.accountRepository.save(account);
         return this.depositAdapter.adapt(account);
     }
 }

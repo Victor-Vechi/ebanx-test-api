@@ -34,7 +34,7 @@ export class WithdrawUseCase implements WithdrawUseCaseInterface {
 
         account = this.accountTransaction.withdraw(account, event.amount);
 
-        await this.accountRepository.save([account]);
+        await this.accountRepository.save(account);
         
         return this.withdrawAdapter.adapt(account);
         

@@ -17,8 +17,7 @@ export class AccountRepository implements AccountRepositoryInterface {
         });
     }
 
-    async save(accounts: AccountModel[]): Promise<AccountModel[]> {
-
+    async saveAll(accounts: AccountModel[]): Promise<AccountModel[]> {
         const result = await this.prismaService.$transaction(async (prisma) => {
             return Promise.all(
                 accounts.map((account) =>
@@ -34,8 +33,15 @@ export class AccountRepository implements AccountRepositoryInterface {
         return result
     }
 
+    async save(account: AccountModel): Promise<AccountModel> {
+        return this.prismaService.account.upsert({
+            where: { id: account.id },
+            update: account,
+            create: account,
+        });
+    }
+
     async resetTable(): Promise<void> {
         await this.prismaService.account.deleteMany();
     }
-
 }
