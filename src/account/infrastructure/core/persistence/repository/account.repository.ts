@@ -4,9 +4,6 @@ import { AccountRepositoryInterface } from "src/account/domain/core/repository/a
 import type { PrismaServiceInterface } from "src/shared/domain/database/prisma-provider/prisma-service.interface";
 
 
-
-
-
 @Injectable()
 export class AccountRepository implements AccountRepositoryInterface {
     constructor(

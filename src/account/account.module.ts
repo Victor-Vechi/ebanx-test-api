@@ -5,7 +5,7 @@ import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/
 import { EventHandler } from './application/core/handler/event.handler';
 import { DepositUseCase } from './application/core/use-cases/deposit.use-case';
 import { DepositAdapter } from './application/core/adapter/deposit.adapter';
-import { AccountRepository } from './infrastructure/core/persistence/repository/account.repository.interface';
+import { AccountRepository } from './infrastructure/core/persistence/repository/account.repository';
 import { DepositValidator } from './application/core/validator/deposit.validator';
 import { AccountTransactionService } from './application/core/service/account-transaction.service';
 
