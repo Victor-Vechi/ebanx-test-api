@@ -12,4 +12,11 @@ export class AccountTransactionService implements AccountTransactionInterface {
 
         return account;
     }
+
+    withdraw(account: Account, amount: number): Account {
+        account.balance -= amount;
+        account.updatedAt = new Date();
+
+        return account;
+    }
 }

@@ -8,6 +8,9 @@ import { DepositAdapter } from './application/core/adapter/deposit.adapter';
 import { AccountRepository } from './infrastructure/core/persistence/repository/account.repository';
 import { DepositValidator } from './application/core/validator/deposit.validator';
 import { AccountTransactionService } from './application/core/service/account-transaction.service';
+import { WithdrawUseCase } from './application/core/use-cases/withdraw.use-case';
+import { WithdrawAdapter } from './application/core/adapter/withdraw.adapter';
+import { WithdrawValidator } from './application/core/validator/withdraw.validator';
 
 
 @Module({
@@ -37,6 +40,18 @@ import { AccountTransactionService } from './application/core/service/account-tr
         {
             provide: DependencyInjectionEnum.DEPOSIT_ADAPTER,
             useClass: DepositAdapter,
+        },
+        {
+            provide: DependencyInjectionEnum.WITHDRAW_CASE,
+            useClass: WithdrawUseCase,
+        },
+        {
+            provide: DependencyInjectionEnum.WITHDRAW_ADAPTER,
+            useClass: WithdrawAdapter,
+        },
+        {
+            provide: DependencyInjectionEnum.WITHDRAW_VALIDATOR,
+            useClass: WithdrawValidator,
         }
     ],
 })
