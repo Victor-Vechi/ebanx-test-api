@@ -5,6 +5,7 @@ export enum DependencyInjectionEnum {
 
     //Services
     ACCOUNT_TRANSACTION = 'AccountTransactionInterface',
+    ACCOUNT_MANAGER = 'AccountManagerInterface',
 
     // Use Cases
     DEPOSIT_CASE = 'DepositUseCaseInterface',

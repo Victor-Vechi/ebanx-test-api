@@ -14,6 +14,7 @@ import { WithdrawValidator } from './application/core/validator/withdraw.validat
 import { TransferUseCase } from './application/core/use-cases/transfer.use-case';
 import { TransferValidator } from './application/core/validator/transfer.validator';
 import { TransferAdapter } from './application/core/adapter/transfer.adapter';
+import { AccountManagerService } from './application/core/service/account-manager.service';
 
 
 @Module({
@@ -67,6 +68,10 @@ import { TransferAdapter } from './application/core/adapter/transfer.adapter';
         {
             provide: DependencyInjectionEnum.TRANSFER_ADAPTER,
             useClass: TransferAdapter,
+        },
+        {
+            provide: DependencyInjectionEnum.ACCOUNT_MANAGER,
+            useClass: AccountManagerService,
         }
     ],
 })
