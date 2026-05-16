@@ -26,6 +26,7 @@ describe('WithdrawUseCase', () => {
         withdrawValidator = new WithdrawValidator();
         accountRepository = {
             findById: jest.fn(),
+            saveAll: jest.fn(),
             save: jest.fn(),
             resetTable: jest.fn(),
         };

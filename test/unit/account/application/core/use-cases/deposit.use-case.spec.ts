@@ -27,6 +27,7 @@ describe('DepositUseCase', () => {
         depositValidator = new DepositValidator();
         accountRepository = {
             findById: jest.fn(),
+            saveAll: jest.fn(),
             save: jest.fn(),
             resetTable: jest.fn(),
         };
