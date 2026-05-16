@@ -5,6 +5,8 @@ import { TransferUseCaseInterface } from "src/account/domain/core/action/transfe
 import type { TransferAdapterInterface } from "src/account/domain/core/adapter/transfer-adapter.interface";
 import { EventDto } from "src/account/domain/core/dto/event.dto";
 import { TransferResponseInterface } from "src/account/domain/core/event/transfer-response.interface";
+import { AccountNotFoundException } from "src/account/domain/core/exception/account-not-found.exception";
+import { InsufficientFundsException } from "src/account/domain/core/exception/insufficient-funds.exception";
 import type { AccountRepositoryInterface } from "src/account/domain/core/repository/account-repository.interface";
 import type { AccountTransactionInterface } from "src/account/domain/core/service/account-transaction.interface";
 import type { TransferValidatorInterface } from "src/account/domain/core/validator/transfer-validator.interface";
@@ -34,11 +36,11 @@ export class TransferUseCase implements TransferUseCaseInterface {
     private async transferFrom(transferData: EventDto): Promise<Account> {
         let originAccount = await this.accountRepository.findById(transferData.origin!);
         if (!originAccount) {
-            throw new Error("Origin account not found");
+            throw new AccountNotFoundException(transferData.origin!);
         }
 
         if (originAccount.balance < transferData.amount) {
-            throw new Error("Insufficient funds");
+            throw new InsufficientFundsException(transferData.origin!);
         }
         
         return this.accountTransaction.withdraw(originAccount, transferData.amount);

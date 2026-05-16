@@ -52,6 +52,18 @@ describe('EventHandler', () => {
         expect(withdrawUseCase.execute).toHaveBeenCalledWith(event);
     });
 
+    it('Should handle transfer event', () => {
+        const event = {
+            type: 'transfer',
+            origin: '1',
+            destination: '10',
+            amount: 50,
+        };
+
+        eventHandler.processEvent(event);
+        expect(transferUseCase.execute).toHaveBeenCalledWith(event);
+    });
+
     it('Should throw error for unknown event type', async () => {
         const event = {
             type: 'unknown',
