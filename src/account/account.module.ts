@@ -11,6 +11,9 @@ import { AccountTransactionService } from './application/core/service/account-tr
 import { WithdrawUseCase } from './application/core/use-cases/withdraw.use-case';
 import { WithdrawAdapter } from './application/core/adapter/withdraw.adapter';
 import { WithdrawValidator } from './application/core/validator/withdraw.validator';
+import { TransferUseCase } from './application/core/use-cases/transfer.use-case';
+import { TransferValidator } from './application/core/validator/transfer.validator';
+import { TransferAdapter } from './application/core/adapter/transfer.adapter';
 
 
 @Module({
@@ -52,6 +55,18 @@ import { WithdrawValidator } from './application/core/validator/withdraw.validat
         {
             provide: DependencyInjectionEnum.WITHDRAW_VALIDATOR,
             useClass: WithdrawValidator,
+        },
+        {
+            provide: DependencyInjectionEnum.TRANSFER_CASE,
+            useClass: TransferUseCase,
+        },
+        {
+            provide: DependencyInjectionEnum.TRANSFER_VALIDATOR,
+            useClass: TransferValidator,
+        },
+        {
+            provide: DependencyInjectionEnum.TRANSFER_ADAPTER,
+            useClass: TransferAdapter,
         }
     ],
 })

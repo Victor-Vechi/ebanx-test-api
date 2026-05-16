@@ -1,5 +1,6 @@
 import { EventHandler } from "src/account/application/core/handler/event.handler";
 import { DepositUseCaseInterface } from "src/account/domain/core/action/deposit-use-case.interface";
+import { TransferUseCaseInterface } from "src/account/domain/core/action/transfer-use-case.interface";
 import { WithdrawUseCaseInterface } from "src/account/domain/core/action/withdraw-use-case.interface";
 import { EventHandlerInterface } from "src/account/domain/core/handler/event-handler.interface";
 
@@ -10,6 +11,7 @@ describe('EventHandler', () => {
     let eventHandler: EventHandlerInterface;
     let depositUseCase: DepositUseCaseInterface;
     let withdrawUseCase: WithdrawUseCaseInterface;
+    let transferUseCase: TransferUseCaseInterface;
     beforeEach(() => {
 
         depositUseCase = {
@@ -20,7 +22,11 @@ describe('EventHandler', () => {
             execute: jest.fn(),
         };
 
-        eventHandler = new EventHandler(depositUseCase, withdrawUseCase);
+        transferUseCase = {
+            execute: jest.fn(),
+        };
+
+        eventHandler = new EventHandler(depositUseCase, withdrawUseCase, transferUseCase);
     });
 
     it('Should handle deposit event', () => {
