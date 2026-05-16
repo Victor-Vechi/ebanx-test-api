@@ -72,13 +72,16 @@
       "!src/**/*.spec.ts",
       "!src/**/domain/**/*.ts",
       "!src/main.ts",
-      "!src/app.module.ts"
+      "!**/*.module.ts",
+      "!**/*.controller.ts"
     ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/src/$1",
-      "^test/(.*)$": "<rootDir>/test/$1"
+      "^test/(.*)$": "<rootDir>/test/$1",
+      "^generated/(.*)\\.js$": "<rootDir>/generated/$1",
+      "^generated/(.*)$": "<rootDir>/generated/$1"
     }
   }
 }
