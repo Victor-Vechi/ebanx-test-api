@@ -1,8 +1,17 @@
-generator client {
-  provider = "prisma-client-js"
-}
 
+generator client {
+  provider       = "prisma-client"
+  output   = "../generated/prisma"
+  moduleFormat             = "cjs"
+}
 datasource db {
   provider = "sqlite"
 }
 
+
+model Account {
+  id        String   @id
+  balance   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
