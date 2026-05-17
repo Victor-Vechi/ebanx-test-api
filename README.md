@@ -1,8 +1,10 @@
-# ebanx-test-api
+# Introdução
 
-Projeto desenvolvido como desafio técnico para mid-level software engineer.
+API REST bancária desenvolvida em **NestJS** com **TypeScript**, projetada para processar operações financeiras entre contas mas podendo ser expandido posteriormente.
 
-API REST para gerenciamento de contas financeiras, suportando operações de depósito, saque e transferência.
+O projeto aplica os princípios de **Clean Architecture**, separando domínio, aplicação e infraestrutura em camadas bem definidas, com baixo acoplamento e alta coesão. A persistência é feita via **Prisma ORM** com **SQLite**.
+
+
 
 ---
 
@@ -92,22 +94,27 @@ Os requisitos do projeto deixaram algumas regras de negócio implícitas, que pr
 
 ### Rodando localmente (sem Docker)
 
-**1. Instale as dependências**
+**1. Copie o .env para o projeto**
+```bash
+cp .env.example .env
+```
+
+**2. Instale as dependências**
 ```bash
 npm install
 ```
 
-**2. Gere o cliente do Prisma**
+**3. Gere o cliente do Prisma**
 ```bash
 npx prisma generate
 ```
 
-**3. Execute as migrations do banco de dados**
+**4. Execute as migrations do banco de dados**
 ```bash
 npx prisma migrate deploy
 ```
 
-**4. Inicie a aplicação**
+**5. Inicie a aplicação**
 ```bash
 # Desenvolvimento (com hot-reload)
 npm run start:dev
@@ -121,6 +128,11 @@ A API estará disponível em `http://localhost:3000`.
 ---
 
 ### Rodando com Docker
+
+**Copie o .env para o projeto**
+```bash
+cp .env.example .env
+```
 
 **Build e start do container:**
 ```bash
@@ -137,11 +149,14 @@ O Docker irá automaticamente instalar as dependências, gerar o Prisma Client, 
 # Rodar todos os testes unitários
 npm test
 
-# Rodar com watch mode
-npm run test:watch
-
 # Gerar relatório de cobertura
 npm run test:cov
+
+# Rodar todos os testes unitários com docker
+docker compose exec api-service npm test
+
+# Gerar relatório de cobertura
+docker compose exec api-service npm run test:cov
 ```
 
 ---
@@ -151,4 +166,5 @@ npm run test:cov
 | Variável | Padrão | Descrição |
 |---|---|---|
 | `PORT` | `3000` | Porta em que a aplicação será iniciada |
+| `DATABASE_URL` | `file:./prisma/dev.db` | Url padrão para banco local |
 
