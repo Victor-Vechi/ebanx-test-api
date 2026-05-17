@@ -16,63 +16,62 @@ import { TransferValidator } from './application/core/validator/transfer.validat
 import { TransferAdapter } from './application/core/adapter/transfer.adapter';
 import { AccountManagerService } from './application/core/service/account-manager.service';
 
-
 @Module({
-    imports: [SharedModule],
-    controllers: [AccountController],
-    providers: [
-        {
-            provide: DependencyInjectionEnum.EVENT_HANDLER,
-            useClass: EventHandler,
-        },
-        {
-            provide: DependencyInjectionEnum.ACCOUNT_TRANSACTION,
-            useClass: AccountTransactionService,
-        },
-        {
-            provide: DependencyInjectionEnum.ACCOUNT_REPOSITORY,
-            useClass: AccountRepository,
-        },
-        {
-            provide: DependencyInjectionEnum.DEPOSIT_VALIDATOR,
-            useClass: DepositValidator,
-        },
-        {
-            provide: DependencyInjectionEnum.DEPOSIT_CASE,
-            useClass: DepositUseCase,
-        },
-        {
-            provide: DependencyInjectionEnum.DEPOSIT_ADAPTER,
-            useClass: DepositAdapter,
-        },
-        {
-            provide: DependencyInjectionEnum.WITHDRAW_CASE,
-            useClass: WithdrawUseCase,
-        },
-        {
-            provide: DependencyInjectionEnum.WITHDRAW_ADAPTER,
-            useClass: WithdrawAdapter,
-        },
-        {
-            provide: DependencyInjectionEnum.WITHDRAW_VALIDATOR,
-            useClass: WithdrawValidator,
-        },
-        {
-            provide: DependencyInjectionEnum.TRANSFER_CASE,
-            useClass: TransferUseCase,
-        },
-        {
-            provide: DependencyInjectionEnum.TRANSFER_VALIDATOR,
-            useClass: TransferValidator,
-        },
-        {
-            provide: DependencyInjectionEnum.TRANSFER_ADAPTER,
-            useClass: TransferAdapter,
-        },
-        {
-            provide: DependencyInjectionEnum.ACCOUNT_MANAGER,
-            useClass: AccountManagerService,
-        }
-    ],
+  imports: [SharedModule],
+  controllers: [AccountController],
+  providers: [
+    {
+      provide: DependencyInjectionEnum.EVENT_HANDLER,
+      useClass: EventHandler,
+    },
+    {
+      provide: DependencyInjectionEnum.ACCOUNT_TRANSACTION,
+      useClass: AccountTransactionService,
+    },
+    {
+      provide: DependencyInjectionEnum.ACCOUNT_REPOSITORY,
+      useClass: AccountRepository,
+    },
+    {
+      provide: DependencyInjectionEnum.DEPOSIT_VALIDATOR,
+      useClass: DepositValidator,
+    },
+    {
+      provide: DependencyInjectionEnum.DEPOSIT_CASE,
+      useClass: DepositUseCase,
+    },
+    {
+      provide: DependencyInjectionEnum.DEPOSIT_ADAPTER,
+      useClass: DepositAdapter,
+    },
+    {
+      provide: DependencyInjectionEnum.WITHDRAW_CASE,
+      useClass: WithdrawUseCase,
+    },
+    {
+      provide: DependencyInjectionEnum.WITHDRAW_ADAPTER,
+      useClass: WithdrawAdapter,
+    },
+    {
+      provide: DependencyInjectionEnum.WITHDRAW_VALIDATOR,
+      useClass: WithdrawValidator,
+    },
+    {
+      provide: DependencyInjectionEnum.TRANSFER_CASE,
+      useClass: TransferUseCase,
+    },
+    {
+      provide: DependencyInjectionEnum.TRANSFER_VALIDATOR,
+      useClass: TransferValidator,
+    },
+    {
+      provide: DependencyInjectionEnum.TRANSFER_ADAPTER,
+      useClass: TransferAdapter,
+    },
+    {
+      provide: DependencyInjectionEnum.ACCOUNT_MANAGER,
+      useClass: AccountManagerService,
+    },
+  ],
 })
-export class AccountModule { }
+export class AccountModule {}

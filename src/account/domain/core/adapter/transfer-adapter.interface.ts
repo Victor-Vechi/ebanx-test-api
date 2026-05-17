@@ -1,6 +1,6 @@
-import { Account } from "generated/prisma/client";
-import { TransferResponseInterface } from "../event/transfer-response.interface";
+import { Account } from 'generated/prisma/client';
+import { TransferResponseInterface } from '../event/transfer-response.interface';
 
 export interface TransferAdapterInterface {
-    adapt(origin: Account, destination: Account): TransferResponseInterface;
+  adapt(origin: Account, destination: Account): TransferResponseInterface;
 }

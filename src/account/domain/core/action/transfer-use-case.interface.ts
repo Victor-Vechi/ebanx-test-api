@@ -1,7 +1,6 @@
-import { EventDto } from "../dto/event.dto";
-import { TransferResponseInterface } from "../event/transfer-response.interface";
-
+import { EventDto } from '../dto/event.dto';
+import { TransferResponseInterface } from '../event/transfer-response.interface';
 
 export interface TransferUseCaseInterface {
-    execute(event: EventDto): Promise<TransferResponseInterface>
+  execute(event: EventDto): Promise<TransferResponseInterface>;
 }

@@ -1,19 +1,19 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class EventDto {
-    @IsNotEmpty()
-    @IsString()
-    type!: string;
+  @IsNotEmpty()
+  @IsString()
+  type!: string;
 
-    @IsOptional()
-    @IsString()
-    origin?: string;
+  @IsOptional()
+  @IsString()
+  origin?: string;
 
-    @IsString()
-    @IsOptional()
-    destination?: string;
+  @IsString()
+  @IsOptional()
+  destination?: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    amount!: number;
+  @IsNotEmpty()
+  @IsNumber()
+  amount!: number;
 }
