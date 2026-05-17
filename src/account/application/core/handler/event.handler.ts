@@ -4,7 +4,7 @@ import type { TransferUseCaseInterface } from 'src/account/domain/core/action/tr
 import type { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
 import { EventDto } from 'src/account/domain/core/dto/event.dto';
 import { EventResponseInterface } from 'src/account/domain/core/event/event-response.interface';
-import { EventType } from 'src/account/domain/core/event/event-type.enum';
+import { EventType } from 'src/account/domain/core/enum/event-type.enum';
 import { EventInvalidException } from 'src/account/domain/core/exception/event-invalid.exception';
 import { EventHandlerInterface } from 'src/account/domain/core/handler/event-handler.interface';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
