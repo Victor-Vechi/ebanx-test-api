@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SharedModule } from 'src/shared/shared.module';
 import { AccountController } from './infrastructure/core/http/v1/controller/event.controller';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
-import { EventHandler } from './application/core/handler/event.handler';
+import { EventManagerService } from './application/core/service/event-manager.service';
 import { DepositUseCase } from './application/core/use-cases/deposit.use-case';
 import { DepositAdapter } from './application/core/adapter/deposit.adapter';
 import { AccountRepository } from './infrastructure/core/persistence/repository/account.repository';
@@ -21,8 +21,8 @@ import { AccountManagerService } from './application/core/service/account-manage
   controllers: [AccountController],
   providers: [
     {
-      provide: DependencyInjectionEnum.EVENT_HANDLER,
-      useClass: EventHandler,
+      provide: DependencyInjectionEnum.EVENT_MANAGER,
+      useClass: EventManagerService,
     },
     {
       provide: DependencyInjectionEnum.ACCOUNT_TRANSACTION,

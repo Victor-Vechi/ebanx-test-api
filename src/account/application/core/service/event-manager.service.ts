@@ -6,11 +6,11 @@ import { EventDto } from 'src/account/domain/core/dto/event.dto';
 import { EventResponseInterface } from 'src/account/domain/core/event/event-response.interface';
 import { EventType } from 'src/account/domain/core/enum/event-type.enum';
 import { EventInvalidException } from 'src/account/domain/core/exception/event-invalid.exception';
-import { EventHandlerInterface } from 'src/account/domain/core/handler/event-handler.interface';
+import { EventManagerInterface } from 'src/account/domain/core/service/event-manager.interface';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
 
 @Injectable()
-export class EventHandler implements EventHandlerInterface {
+export class EventManagerService implements EventManagerInterface {
   constructor(
     @Inject(DependencyInjectionEnum.DEPOSIT_CASE)
     private readonly depositAction: DepositUseCaseInterface,

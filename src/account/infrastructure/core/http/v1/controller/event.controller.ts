@@ -10,7 +10,7 @@ import {
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import type { EventHandlerInterface } from 'src/account/domain/core/handler/event-handler.interface';
+import type { EventManagerInterface } from 'src/account/domain/core/service/event-manager.interface';
 import { EventDto } from 'src/account/domain/core/dto/event.dto';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
 import type { AccountManagerInterface } from 'src/account/domain/core/service/account-manager.interface';
@@ -18,8 +18,8 @@ import type { AccountManagerInterface } from 'src/account/domain/core/service/ac
 @Controller()
 export class AccountController {
   constructor(
-    @Inject(DependencyInjectionEnum.EVENT_HANDLER)
-    private readonly eventManager: EventHandlerInterface,
+    @Inject(DependencyInjectionEnum.EVENT_MANAGER)
+    private readonly eventManager: EventManagerInterface,
     @Inject(DependencyInjectionEnum.ACCOUNT_MANAGER)
     private readonly accountManager: AccountManagerInterface,
   ) {}

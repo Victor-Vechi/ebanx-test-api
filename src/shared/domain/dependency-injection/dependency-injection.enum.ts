@@ -1,5 +1,5 @@
 export enum DependencyInjectionEnum {
-  EVENT_HANDLER = 'EventHandlerInterface',
+  EVENT_MANAGER = 'EventManagerInterface',
 
   //Services
   ACCOUNT_TRANSACTION = 'AccountTransactionInterface',
