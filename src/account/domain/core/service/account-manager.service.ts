@@ -37,7 +37,7 @@ export class AccountManagerService implements AccountManagerInterface {
   async saveAccount(account: AccountModel): Promise<void> {
     await this.accountRepository.save(account);
   }
-  
+
   async saveTransaction(accounts: AccountModel[]): Promise<void> {
     await this.accountRepository.saveAll(accounts);
   }

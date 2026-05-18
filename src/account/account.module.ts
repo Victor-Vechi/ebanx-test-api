@@ -76,7 +76,7 @@ import { BalanceQueryService } from './application/core/service/balance-query.se
     {
       provide: DependencyInjectionEnum.BALANCE_QUERY,
       useClass: BalanceQueryService,
-    }
+    },
   ],
 })
 export class AccountModule {}

@@ -29,13 +29,21 @@ export class TransferUseCase implements TransferUseCaseInterface {
       throw new AccountNotFoundException(event.origin!);
     }
 
-    let destinationAccount = await this.accountManager.getDestinationAccount(event.destination!);
+    let destinationAccount = await this.accountManager.getDestinationAccount(
+      event.destination!,
+    );
 
-    [originAccount, destinationAccount] = this.accountTransaction.transfer(originAccount, destinationAccount, event.amount);
+    [originAccount, destinationAccount] = this.accountTransaction.transfer(
+      originAccount,
+      destinationAccount,
+      event.amount,
+    );
 
-    await this.accountManager.saveTransaction([originAccount, destinationAccount]);
-      
+    await this.accountManager.saveTransaction([
+      originAccount,
+      destinationAccount,
+    ]);
+
     return this.transferAdapter.adapt(originAccount, destinationAccount);
   }
-       
 }

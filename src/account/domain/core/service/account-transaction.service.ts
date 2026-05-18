@@ -3,12 +3,9 @@ import { Account } from 'generated/prisma/client';
 import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import { InsufficientFundsException } from '../exception/insufficient-funds.exception';
 
-
 @Injectable()
 export class AccountTransactionService implements AccountTransactionInterface {
-
   deposit(account: Account, amount: number): Account {
-
     account.balance += amount;
     account.updatedAt = new Date();
 
@@ -25,8 +22,11 @@ export class AccountTransactionService implements AccountTransactionInterface {
     return account;
   }
 
-  transfer(originAccount: Account, destinationAccount: Account, amount: number): Account[] {
-    
+  transfer(
+    originAccount: Account,
+    destinationAccount: Account,
+    amount: number,
+  ): Account[] {
     originAccount = this.withdraw(originAccount, amount);
     destinationAccount = this.deposit(destinationAccount, amount);
 

@@ -6,9 +6,6 @@ import { WithdrawResponseDto } from 'src/account/domain/core/dto/response/withdr
 @Injectable()
 export class WithdrawAdapter implements WithdrawAdapterInterface {
   adapt(account: Account): WithdrawResponseDto {
-    return new WithdrawResponseDto(
-      account.id,
-      account.balance,
-    );
-  };
+    return new WithdrawResponseDto(account.id, account.balance);
+  }
 }

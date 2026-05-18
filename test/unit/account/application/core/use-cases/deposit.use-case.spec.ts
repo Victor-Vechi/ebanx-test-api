@@ -50,7 +50,9 @@ describe('DepositUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountManager.getDestinationAccount as jest.Mock).mockResolvedValue(account);
+    (accountManager.getDestinationAccount as jest.Mock).mockResolvedValue(
+      account,
+    );
 
     const expectedResponse = {
       destination: {
@@ -63,7 +65,9 @@ describe('DepositUseCase', () => {
 
     expect(response).toEqual(expectedResponse);
 
-    expect(accountManager.getDestinationAccount).toHaveBeenCalledWith(event.destination);
+    expect(accountManager.getDestinationAccount).toHaveBeenCalledWith(
+      event.destination,
+    );
   });
 
   it('Should execute deposit use case with new account', async () => {
@@ -72,14 +76,12 @@ describe('DepositUseCase', () => {
       destination: '1',
       amount: 100,
     };
-    (accountManager.getDestinationAccount as jest.Mock).mockResolvedValue(
-      {
-        id: event.destination,
-        balance: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-    );
+    (accountManager.getDestinationAccount as jest.Mock).mockResolvedValue({
+      id: event.destination,
+      balance: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
     const expectedResponse = {
       destination: {
         id: '1',
@@ -89,6 +91,8 @@ describe('DepositUseCase', () => {
     const response = await depositUseCase.execute(event);
     expect(response).toEqual(expectedResponse);
 
-    expect(accountManager.getDestinationAccount).toHaveBeenCalledWith(event.destination);
+    expect(accountManager.getDestinationAccount).toHaveBeenCalledWith(
+      event.destination,
+    );
   });
 });

@@ -28,7 +28,8 @@ describe('AccountManagerService', () => {
 
     (accountRepository.findById as jest.Mock).mockResolvedValue(account);
 
-    const destinationAccount = await accountManagerService.getDestinationAccount('1');
+    const destinationAccount =
+      await accountManagerService.getDestinationAccount('1');
     expect(destinationAccount).toEqual(account);
   });
 
@@ -41,7 +42,8 @@ describe('AccountManagerService', () => {
     };
     (accountRepository.findById as jest.Mock).mockResolvedValue(null);
 
-    const destinationAccount = await accountManagerService.getDestinationAccount('1');
+    const destinationAccount =
+      await accountManagerService.getDestinationAccount('1');
     expect(destinationAccount).toEqual(account);
   });
 

@@ -6,9 +6,6 @@ import { DepositResponseDto } from 'src/account/domain/core/dto/response/deposit
 @Injectable()
 export class DepositAdapter implements DepositAdapterInterface {
   adapt(account: Account): DepositResponseDto {
-    return new DepositResponseDto(
-      account.id,
-      account.balance,
-    );
+    return new DepositResponseDto(account.id, account.balance);
   }
 }

@@ -59,7 +59,9 @@ describe('TransferUseCase', () => {
     };
 
     accountManager.getAccount = jest.fn().mockResolvedValueOnce(originAccount);
-    accountManager.getDestinationAccount = jest.fn().mockResolvedValueOnce(destinationAccount);
+    accountManager.getDestinationAccount = jest
+      .fn()
+      .mockResolvedValueOnce(destinationAccount);
 
     const expectedResponse = {
       origin: {
@@ -94,15 +96,13 @@ describe('TransferUseCase', () => {
     };
 
     accountManager.getAccount = jest.fn().mockResolvedValueOnce(originAccount);
-    accountManager.getDestinationAccount = jest.fn().mockResolvedValueOnce(
-      {
-        id: event.destination,
-        balance: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-    );
-    
+    accountManager.getDestinationAccount = jest.fn().mockResolvedValueOnce({
+      id: event.destination,
+      balance: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
     (accountManager.saveAccount as jest.Mock).mockResolvedValue({
       id: event.destination,
       balance: 0,

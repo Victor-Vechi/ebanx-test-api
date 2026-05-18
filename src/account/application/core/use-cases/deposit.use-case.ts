@@ -23,7 +23,9 @@ export class DepositUseCase implements DepositUseCaseInterface {
 
   async execute(event: EventDto): Promise<DepositResponseDto> {
     this.depositValidator.execute(event);
-    let account = await this.accountManager.getDestinationAccount(event.destination!);
+    let account = await this.accountManager.getDestinationAccount(
+      event.destination!,
+    );
 
     account = this.accountTransaction.deposit(account, event.amount);
 
