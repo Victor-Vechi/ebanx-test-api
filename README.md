@@ -1,6 +1,6 @@
 # Introdução
 
-API REST bancária desenvolvida em **NestJS** com **TypeScript**, projetada para processar operações financeiras entre contas mas podendo ser expandido posteriormente.
+API REST bancária desenvolvida em **NestJS** com **TypeScript**, projetada para processar operações financeiras entre contas, com possibilidade de expansão futura.
 
 O projeto aplica os princípios de **Clean Architecture**, separando domínio, aplicação e infraestrutura em camadas bem definidas, com baixo acoplamento e alta coesão. A persistência é feita via **Prisma ORM** com **SQLite**.
 
@@ -40,15 +40,14 @@ src/
 
 ## Decisões estratégicas
 
-Durante repasse do projeto foi comentado sobre garantir atomicidade, portanto implementei principalmente para o cenário de transferências,
-o sistema salvar os dados usando transaction no banco de dados, assim garantindo que o débito da conta de origem e o crédito da conta de destino são persistidos atomicamente, ou os dois ocorrem, ou nenhum ocorre.
+Durante o repasse do projeto foi comentado sobre garantir atomicidade, portanto implementei o salvamento dos dados via transaction no banco, principalmente no cenário de transferências. Assim, o débito da conta de origem e o crédito da conta de destino são persistidos atomicamente: ou os dois ocorrem, ou nenhum ocorre.
 
 Uma decisão importante foi em relação à simplicidade, optei por separar bem responsabilidades o que aumenta consequentemente o número de arquivos, porém cada arquivo está conciso e com baixo acoplamento e alta coesão.
 
 Os requisitos do projeto deixaram algumas regras de negócio implícitas, que precisaram ser interpretadas e implementadas:
 
-- **Saldo como valor inteiro** — Ficou de maneira implicita nos requisitos do projeto que seria trabalhado apenas números inteiros, portanto segui com essa visão, mas um refactor para trabalhar com ponto flutuante seria interessante.
-- **Criação automática de conta** — os requisitos demonstraram que ao depositar ou transferir para uma conta inexistente deveria ser criada uma nova conta para receber esse saldo. Seguindo essa lógica optei por nesses casos, criar uma conta zerada e então atualizar o dado para ter uma forma de registro, em outros casos eu criaria uma tabela de log e registraria principalmente as transações de cada conta para possível auditoria.
+- **Saldo como valor inteiro** — Ficou de maneira implícita nos requisitos do projeto que seria trabalhado apenas com números inteiros, portanto segui com essa visão, mas um refactor para trabalhar com ponto flutuante seria interessante.
+- **Criação automática de conta** — Os requisitos demonstraram que, ao depositar ou transferir para uma conta inexistente, uma nova conta deveria ser criada para receber esse saldo. Seguindo essa lógica, optei por criar uma conta zerada e então atualizar o dado, garantindo uma forma de registro. Em outros casos, eu criaria uma tabela de log e registraria principalmente as transações de cada conta para possível auditoria.
 
 ---
 
@@ -59,6 +58,10 @@ Os requisitos do projeto deixaram algumas regras de negócio implícitas, que pr
 | `POST` | `/reset` | Reseta todas as contas |
 | `GET` | `/balance?account_id={id}` | Retorna o saldo de uma conta |
 | `POST` | `/event` | Processa um evento (`deposit`, `withdraw`, `transfer`) |
+
+> Depósito, saque e transferência são tratados pelo mesmo endpoint `POST /event`, diferenciados pelo campo `type` do payload.
+
+> Uma collection com os requests prontos está disponível em [`desafio-collection.yaml`](./desafio-collection.yaml) na raiz do projeto.
 
 ### Exemplos de payload para `/event`
 
@@ -136,20 +139,20 @@ cp .env.example .env
 
 **Build e start do container:**
 ```bash
-docker-compose up --build
+docker compose up -d --build
 ```
 
 O Docker irá automaticamente instalar as dependências, gerar o Prisma Client, executar as migrations e iniciar a aplicação na porta `3000`.
 
-> **Atenção:** o `docker-compose` está configurado em modo **produção** — `node_modules` e o cliente do Prisma (`generated/`) são criados durante o **build da imagem**, não em tempo de execução. Portanto, sempre que houver mudança em dependências (`package.json`) ou no schema do Prisma (`prisma/schema.prisma`), é necessário rebuildar a imagem:
+> **Atenção:** o `docker compose` está configurado em modo **desenvolvimento**, com hot-reload (`npm run start:dev`) e o diretório do projeto montado como volume. A cada `up`, o container já se encarrega de instalar dependências (se necessário), regenerar o Prisma Client e aplicar as migrations — ou seja, mudanças em `package.json` ou em `prisma/schema.prisma` são absorvidas em runtime, sem precisar de rebuild.
 >
-> ```bash
-> docker-compose up --build
-> ```
+> O `--build` só é necessário quando o próprio `dockerfile` mudar.
 
 ---
 
 ## Testes
+
+O projeto possui apenas testes **unitários** (Jest), localizados em `test/` e identificados pelo padrão `*.spec.ts`.
 
 ```bash
 # Rodar todos os testes unitários
@@ -158,10 +161,10 @@ npm test
 # Gerar relatório de cobertura
 npm run test:cov
 
-# Rodar todos os testes unitários com docker
+# Rodar todos os testes unitários via docker
 docker compose exec api-service npm test
 
-# Gerar relatório de cobertura
+# Gerar relatório de cobertura via docker
 docker compose exec api-service npm run test:cov
 ```
 
