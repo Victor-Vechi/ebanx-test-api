@@ -7,7 +7,7 @@ import { TransferAdapterInterface } from 'src/account/domain/core/adapter/transf
 import { TransferValidatorInterface } from 'src/account/domain/core/validator/transfer-validator.interface';
 import { TransferAdapter } from 'src/account/application/core/adapter/transfer.adapter';
 import { TransferValidator } from 'src/account/application/core/validator/transfer.validator';
-import { TransferUseCase } from 'src/account/application/core/use-cases/transfer.use-case';
+import { TransferUseCase } from 'src/account/application/core/use-case/transfer.use-case';
 import { AccountManagerInterface } from 'src/account/domain/core/contract/account-manager.interface';
 
 describe('TransferUseCase', () => {

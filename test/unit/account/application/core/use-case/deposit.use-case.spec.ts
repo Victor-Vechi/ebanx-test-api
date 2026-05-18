@@ -1,6 +1,6 @@
 import { DepositAdapter } from 'src/account/application/core/adapter/deposit.adapter';
 import { AccountTransactionService } from 'src/account/domain/core/service/account-transaction.service';
-import { DepositUseCase } from 'src/account/application/core/use-cases/deposit.use-case';
+import { DepositUseCase } from 'src/account/application/core/use-case/deposit.use-case';
 import { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
 import { DepositAdapterInterface } from 'src/account/domain/core/adapter/deposit-adapter.interface';
 import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';

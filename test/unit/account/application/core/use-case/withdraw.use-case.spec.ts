@@ -4,7 +4,7 @@ import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { Account } from 'generated/prisma/client';
 import { WithdrawAdapter } from 'src/account/application/core/adapter/withdraw.adapter';
 import { WithdrawValidator } from 'src/account/application/core/validator/withdraw.validator';
-import { WithdrawUseCase } from 'src/account/application/core/use-cases/withdraw.use-case';
+import { WithdrawUseCase } from 'src/account/application/core/use-case/withdraw.use-case';
 import { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withdraw-use-case.interface';
 import { WithdrawAdapterInterface } from 'src/account/domain/core/adapter/withdraw-adapter.interface';
 import { WithdrawValidatorInterface } from 'src/account/domain/core/validator/withdraw-validator.interface';
