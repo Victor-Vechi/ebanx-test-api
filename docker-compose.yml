@@ -3,3 +3,10 @@ services:
     build: .
     ports:
       - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "[ -d node_modules ] || npm install; npx prisma generate; npm run start:dev"
+
+    volumes:
+      - .:/app
