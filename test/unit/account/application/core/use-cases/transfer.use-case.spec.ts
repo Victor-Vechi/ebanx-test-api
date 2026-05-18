@@ -1,7 +1,7 @@
-import { AccountTransactionService } from 'src/account/application/core/service/account-transaction.service';
+import { AccountTransactionService } from 'src/account/domain/core/service/account-transaction.service';
 import { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
-import { AccountTransactionInterface } from 'src/account/domain/core/service/account-transaction.interface';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
+import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { Account } from 'generated/prisma/client';
 import { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
 import { TransferAdapterInterface } from 'src/account/domain/core/adapter/transfer-adapter.interface';
@@ -9,29 +9,32 @@ import { TransferValidatorInterface } from 'src/account/domain/core/validator/tr
 import { TransferAdapter } from 'src/account/application/core/adapter/transfer.adapter';
 import { TransferValidator } from 'src/account/application/core/validator/transfer.validator';
 import { TransferUseCase } from 'src/account/application/core/use-cases/transfer.use-case';
+import { AccountManagerInterface } from 'src/account/domain/core/contract/account-manager.interface';
 
 describe('TransferUseCase', () => {
   let transferUseCase: TransferUseCaseInterface;
   let accountTransactionService: AccountTransactionInterface;
   let transferAdapter: TransferAdapterInterface;
-  let accountRepository: AccountRepositoryInterface;
+  let accountManager: AccountManagerInterface;
   let transferValidator: TransferValidatorInterface;
 
   beforeEach(() => {
     accountTransactionService = new AccountTransactionService();
     transferAdapter = new TransferAdapter();
     transferValidator = new TransferValidator();
-    accountRepository = {
-      findById: jest.fn(),
-      saveAll: jest.fn(),
-      save: jest.fn(),
+    accountManager = {
+      getDestinationAccount: jest.fn(),
+      saveAccount: jest.fn(),
+      getAccount: jest.fn(),
+      saveTransaction: jest.fn(),
+      accountBalance: jest.fn(),
       resetTable: jest.fn(),
     };
 
     transferUseCase = new TransferUseCase(
       accountTransactionService,
       transferAdapter,
-      accountRepository,
+      accountManager,
       transferValidator,
     );
   });
@@ -57,9 +60,8 @@ describe('TransferUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountRepository.findById as jest.Mock)
-      .mockResolvedValueOnce(originAccount)
-      .mockResolvedValueOnce(destinationAccount);
+    accountManager.getAccount = jest.fn().mockResolvedValueOnce(originAccount);
+    accountManager.getDestinationAccount = jest.fn().mockResolvedValueOnce(destinationAccount);
 
     const expectedResponse = {
       origin: {
@@ -76,7 +78,7 @@ describe('TransferUseCase', () => {
 
     expect(response).toEqual(expectedResponse);
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 
   it('Should execute transfer use case with no existing destination account', async () => {
@@ -93,10 +95,17 @@ describe('TransferUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountRepository.findById as jest.Mock)
-      .mockResolvedValueOnce(originAccount)
-      .mockResolvedValueOnce(null);
-    (accountRepository.save as jest.Mock).mockResolvedValue({
+    accountManager.getAccount = jest.fn().mockResolvedValueOnce(originAccount);
+    accountManager.getDestinationAccount = jest.fn().mockResolvedValueOnce(
+      {
+        id: event.destination,
+        balance: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+    );
+    
+    (accountManager.saveAccount as jest.Mock).mockResolvedValue({
       id: event.destination,
       balance: 0,
       createdAt: new Date(),
@@ -118,7 +127,7 @@ describe('TransferUseCase', () => {
 
     expect(response).toEqual(expectedResponse);
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 
   it('Should throw an error if account does not have enough balance', async () => {
@@ -135,13 +144,13 @@ describe('TransferUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountRepository.findById as jest.Mock).mockResolvedValue(account);
+    (accountManager.getAccount as jest.Mock).mockResolvedValue(account);
 
     await expect(transferUseCase.execute(event)).rejects.toThrow(
       'Insufficient funds in account: 1',
     );
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 
   it('Should throw an error if account not found', async () => {
@@ -151,12 +160,12 @@ describe('TransferUseCase', () => {
       destination: '2',
       amount: 100,
     };
-    (accountRepository.findById as jest.Mock).mockResolvedValue(null);
+    (accountManager.getAccount as jest.Mock).mockResolvedValue(null);
 
     await expect(transferUseCase.execute(event)).rejects.toThrow(
       'Origin account not found: 1',
     );
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 });

@@ -10,10 +10,10 @@ import {
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import type { EventManagerInterface } from 'src/account/domain/core/service/event-manager.interface';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
+import type { EventManagerInterface } from 'src/account/domain/core/contract/event-manager.interface';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
-import type { AccountManagerInterface } from 'src/account/domain/core/service/account-manager.interface';
+import type { AccountManagerInterface } from 'src/account/domain/core/contract/account-manager.interface';
 
 @Controller()
 export class AccountController {

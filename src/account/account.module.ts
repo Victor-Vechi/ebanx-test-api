@@ -7,14 +7,14 @@ import { DepositUseCase } from './application/core/use-cases/deposit.use-case';
 import { DepositAdapter } from './application/core/adapter/deposit.adapter';
 import { AccountRepository } from './infrastructure/core/persistence/repository/account.repository';
 import { DepositValidator } from './application/core/validator/deposit.validator';
-import { AccountTransactionService } from './application/core/service/account-transaction.service';
+import { AccountTransactionService } from './domain/core/service/account-transaction.service';
 import { WithdrawUseCase } from './application/core/use-cases/withdraw.use-case';
 import { WithdrawAdapter } from './application/core/adapter/withdraw.adapter';
 import { WithdrawValidator } from './application/core/validator/withdraw.validator';
 import { TransferUseCase } from './application/core/use-cases/transfer.use-case';
 import { TransferValidator } from './application/core/validator/transfer.validator';
 import { TransferAdapter } from './application/core/adapter/transfer.adapter';
-import { AccountManagerService } from './application/core/service/account-manager.service';
+import { AccountManagerService } from './domain/core/service/account-manager.service';
 
 @Module({
   imports: [SharedModule],

@@ -1,6 +1,6 @@
 import { Account } from 'generated/prisma/client';
-import { DepositResponseInterface } from '../event/deposit-response.interface';
+import { DepositResponseDto } from '../dto/response/deposit-response.dto';
 
 export interface DepositAdapterInterface {
-  adapt(account: Account): DepositResponseInterface;
+  adapt(account: Account): DepositResponseDto;
 }

@@ -1,6 +1,6 @@
 import { Account } from 'generated/prisma/client';
-import { AccountTransactionService } from 'src/account/application/core/service/account-transaction.service';
-import { AccountTransactionInterface } from 'src/account/domain/core/service/account-transaction.interface';
+import { AccountTransactionService } from 'src/account/domain/core/service/account-transaction.service';
+import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 
 describe('AccountTransactionService', () => {
   let accountTransactionService: AccountTransactionInterface;

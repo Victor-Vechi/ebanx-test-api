@@ -2,7 +2,7 @@ import { EventManagerService } from 'src/account/application/core/service/event-
 import { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
 import { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
 import { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
-import { EventManagerInterface } from 'src/account/domain/core/service/event-manager.interface';
+import { EventManagerInterface } from 'src/account/domain/core/contract/event-manager.interface';
 
 describe('EventManagerService', () => {
   let eventManager: EventManagerInterface;

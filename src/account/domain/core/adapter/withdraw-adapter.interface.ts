@@ -1,6 +1,6 @@
 import { Account } from 'generated/prisma/client';
-import { WithdrawResponseInterface } from '../event/withdraw-response.interface';
+import { WithdrawResponseDto } from '../dto/response/withdraw-response.dto';
 
 export interface WithdrawAdapterInterface {
-  adapt(account: Account): WithdrawResponseInterface;
+  adapt(account: Account): WithdrawResponseDto;
 }

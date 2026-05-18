@@ -1,7 +1,7 @@
-import { AccountTransactionService } from 'src/account/application/core/service/account-transaction.service';
+import { AccountTransactionService } from 'src/account/domain/core/service/account-transaction.service';
 import { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
-import { AccountTransactionInterface } from 'src/account/domain/core/service/account-transaction.interface';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
+import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { Account } from 'generated/prisma/client';
 import { WithdrawAdapter } from 'src/account/application/core/adapter/withdraw.adapter';
 import { WithdrawValidator } from 'src/account/application/core/validator/withdraw.validator';
@@ -9,29 +9,32 @@ import { WithdrawUseCase } from 'src/account/application/core/use-cases/withdraw
 import { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
 import { WithdrawAdapterInterface } from 'src/account/domain/core/adapter/withdraw-adapter.interface';
 import { WithdrawValidatorInterface } from 'src/account/domain/core/validator/withdraw-validator.interface';
+import { AccountManagerInterface } from 'src/account/domain/core/contract/account-manager.interface';
 
 describe('WithdrawUseCase', () => {
   let withdrawUseCase: WithdrawUseCaseInterface;
   let accountTransactionService: AccountTransactionInterface;
   let withdrawAdapter: WithdrawAdapterInterface;
-  let accountRepository: AccountRepositoryInterface;
+  let accountManager: AccountManagerInterface;
   let withdrawValidator: WithdrawValidatorInterface;
 
   beforeEach(() => {
     accountTransactionService = new AccountTransactionService();
     withdrawAdapter = new WithdrawAdapter();
     withdrawValidator = new WithdrawValidator();
-    accountRepository = {
-      findById: jest.fn(),
-      saveAll: jest.fn(),
-      save: jest.fn(),
+    accountManager = {
+      getDestinationAccount: jest.fn(),
+      saveAccount: jest.fn(),
+      getAccount: jest.fn(),
+      saveTransaction: jest.fn(),
+      accountBalance: jest.fn(),
       resetTable: jest.fn(),
     };
 
     withdrawUseCase = new WithdrawUseCase(
       accountTransactionService,
       withdrawAdapter,
-      accountRepository,
+      accountManager,
       withdrawValidator,
     );
   });
@@ -49,7 +52,7 @@ describe('WithdrawUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountRepository.findById as jest.Mock).mockResolvedValue(account);
+    (accountManager.getAccount as jest.Mock).mockResolvedValue(account);
 
     const expectedResponse = {
       origin: {
@@ -62,7 +65,7 @@ describe('WithdrawUseCase', () => {
 
     expect(response).toEqual(expectedResponse);
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 
   it('Should throw an error if account does not have enough balance', async () => {
@@ -78,13 +81,13 @@ describe('WithdrawUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountRepository.findById as jest.Mock).mockResolvedValue(account);
+    (accountManager.getAccount as jest.Mock).mockResolvedValue(account);
 
     await expect(withdrawUseCase.execute(event)).rejects.toThrow(
       'Insufficient funds in account: 1',
     );
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 
   it('Should throw an error if account not found', async () => {
@@ -93,12 +96,12 @@ describe('WithdrawUseCase', () => {
       origin: '1',
       amount: 100,
     };
-    (accountRepository.findById as jest.Mock).mockResolvedValue(null);
+    (accountManager.getAccount as jest.Mock).mockResolvedValue(null);
 
     await expect(withdrawUseCase.execute(event)).rejects.toThrow(
       'Origin account not found: 1',
     );
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.origin);
+    expect(accountManager.getAccount).toHaveBeenCalledWith(event.origin);
   });
 });
