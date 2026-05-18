@@ -65,7 +65,7 @@
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/**/*.spec.ts",
-      "!src/**/domain/**/*.ts",
+      "!**/*.dto.ts",
       "!src/main.ts",
       "!**/*.module.ts",
       "!**/*.controller.ts"
