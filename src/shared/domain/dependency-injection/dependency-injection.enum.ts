@@ -1,7 +1,10 @@
 export enum DependencyInjectionEnum {
-  EVENT_MANAGER = 'EventManagerInterface',
 
   //Services
+  EVENT_MANAGER = 'EventManagerInterface',
+  BALANCE_QUERY = 'BalanceQueryInterface',
+  
+  // Domain Services
   ACCOUNT_TRANSACTION = 'AccountTransactionInterface',
   ACCOUNT_MANAGER = 'AccountManagerInterface',
 

@@ -43,16 +43,6 @@ export class AccountManagerService implements AccountManagerInterface {
     await this.accountRepository.saveAll(accounts);
   }
 
-  async accountBalance(accountId: string): Promise<number> {
-    const account = await this.getAccount(accountId);
-
-    if (!account) {
-      throw new AccountNotFoundException(accountId);
-    }
-
-    return account.balance;
-  }
-
   async resetTable(): Promise<void> {
     await this.accountRepository.resetTable();
   }

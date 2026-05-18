@@ -27,7 +27,6 @@ describe('WithdrawUseCase', () => {
       saveAccount: jest.fn(),
       getAccount: jest.fn(),
       saveTransaction: jest.fn(),
-      accountBalance: jest.fn(),
       resetTable: jest.fn(),
     };
 

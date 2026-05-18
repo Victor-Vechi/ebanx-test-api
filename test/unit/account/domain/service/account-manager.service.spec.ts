@@ -18,20 +18,6 @@ describe('AccountManagerService', () => {
     accountManagerService = new AccountManagerService(accountRepository);
   });
 
-  it('Should return account balance', async () => {
-    const account: Account = {
-      id: '1',
-      balance: 100,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    (accountRepository.findById as jest.Mock).mockResolvedValue(account);
-
-    const balance = await accountManagerService.accountBalance('1');
-    expect(balance).toBe(100);
-  });
-
   it('Should get destination account', async () => {
     const account: Account = {
       id: '1',
@@ -87,13 +73,6 @@ describe('AccountManagerService', () => {
     ];
     await accountManagerService.saveTransaction(accounts);
     expect(accountRepository.saveAll).toHaveBeenCalledWith(accounts);
-  });
-
-  it('Should throw AccountNotFoundException', async () => {
-    (accountRepository.findById as jest.Mock).mockResolvedValue(null);
-    await expect(accountManagerService.accountBalance('1')).rejects.toThrow(
-      'Origin account not found: 1',
-    );
   });
 
   it('Should reset account repository table', () => {

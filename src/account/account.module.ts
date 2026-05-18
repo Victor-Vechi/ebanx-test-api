@@ -15,6 +15,7 @@ import { TransferUseCase } from './application/core/use-cases/transfer.use-case'
 import { TransferValidator } from './application/core/validator/transfer.validator';
 import { TransferAdapter } from './application/core/adapter/transfer.adapter';
 import { AccountManagerService } from './domain/core/service/account-manager.service';
+import { BalanceQueryService } from './application/core/service/balance-query.service';
 
 @Module({
   imports: [SharedModule],
@@ -72,6 +73,10 @@ import { AccountManagerService } from './domain/core/service/account-manager.ser
       provide: DependencyInjectionEnum.ACCOUNT_MANAGER,
       useClass: AccountManagerService,
     },
+    {
+      provide: DependencyInjectionEnum.BALANCE_QUERY,
+      useClass: BalanceQueryService,
+    }
   ],
 })
 export class AccountModule {}
