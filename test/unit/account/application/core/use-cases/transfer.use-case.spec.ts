@@ -3,7 +3,7 @@ import { AccountRepositoryInterface } from 'src/account/domain/core/repository/a
 import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { Account } from 'generated/prisma/client';
-import { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
+import { TransferUseCaseInterface } from 'src/account/domain/core/use-case/transfer-use-case.interface';
 import { TransferAdapterInterface } from 'src/account/domain/core/adapter/transfer-adapter.interface';
 import { TransferValidatorInterface } from 'src/account/domain/core/validator/transfer-validator.interface';
 import { TransferAdapter } from 'src/account/application/core/adapter/transfer.adapter';

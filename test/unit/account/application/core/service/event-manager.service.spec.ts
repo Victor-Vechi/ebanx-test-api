@@ -1,7 +1,7 @@
 import { EventManagerService } from 'src/account/application/core/service/event-manager.service';
-import { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
-import { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
-import { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
+import { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
+import { TransferUseCaseInterface } from 'src/account/domain/core/use-case/transfer-use-case.interface';
+import { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withdraw-use-case.interface';
 import { EventManagerInterface } from 'src/account/domain/core/contract/event-manager.interface';
 
 describe('EventManagerService', () => {

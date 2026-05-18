@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
+import { TransferUseCaseInterface } from 'src/account/domain/core/use-case/transfer-use-case.interface';
 import type { TransferAdapterInterface } from 'src/account/domain/core/adapter/transfer-adapter.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { AccountNotFoundException } from 'src/account/domain/core/exception/account-not-found.exception';

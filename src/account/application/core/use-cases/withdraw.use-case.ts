@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
+import { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withdraw-use-case.interface';
 import type { WithdrawAdapterInterface } from 'src/account/domain/core/adapter/withdraw-adapter.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { AccountNotFoundException } from 'src/account/domain/core/exception/account-not-found.exception';

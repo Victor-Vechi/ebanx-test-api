@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
-import type { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
-import type { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
+import type { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
+import type { TransferUseCaseInterface } from 'src/account/domain/core/use-case/transfer-use-case.interface';
+import type { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withdraw-use-case.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { EventType } from 'src/account/domain/core/enum/event-type.enum';
 import { EventInvalidException } from 'src/account/domain/core/exception/event-invalid.exception';

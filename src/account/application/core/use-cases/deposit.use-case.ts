@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
+import { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
 import type { DepositAdapterInterface } from 'src/account/domain/core/adapter/deposit-adapter.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import type { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';

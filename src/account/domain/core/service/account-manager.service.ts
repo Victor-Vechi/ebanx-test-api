@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AccountNotFoundException } from 'src/account/domain/core/exception/account-not-found.exception';
 import type { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
 import { AccountManagerInterface } from 'src/account/domain/core/contract/account-manager.interface';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
