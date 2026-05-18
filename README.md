@@ -141,6 +141,12 @@ docker-compose up --build
 
 O Docker irá automaticamente instalar as dependências, gerar o Prisma Client, executar as migrations e iniciar a aplicação na porta `3000`.
 
+> **Atenção:** o `docker-compose` está configurado em modo **produção** — `node_modules` e o cliente do Prisma (`generated/`) são criados durante o **build da imagem**, não em tempo de execução. Portanto, sempre que houver mudança em dependências (`package.json`) ou no schema do Prisma (`prisma/schema.prisma`), é necessário rebuildar a imagem:
+>
+> ```bash
+> docker-compose up --build
+> ```
+
 ---
 
 ## Testes
