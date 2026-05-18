@@ -3,7 +3,6 @@ import { AccountTransactionService } from 'src/account/domain/core/service/accou
 import { DepositUseCase } from 'src/account/application/core/use-cases/deposit.use-case';
 import { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
 import { DepositAdapterInterface } from 'src/account/domain/core/adapter/deposit-adapter.interface';
-import { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
 import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import { DepositValidatorInterface } from 'src/account/domain/core/validator/deposit-validator.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';

@@ -1,5 +1,4 @@
 import { AccountTransactionService } from 'src/account/domain/core/service/account-transaction.service';
-import { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
 import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { Account } from 'generated/prisma/client';

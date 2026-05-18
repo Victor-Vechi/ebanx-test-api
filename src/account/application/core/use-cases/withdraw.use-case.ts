@@ -3,7 +3,6 @@ import { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withd
 import type { WithdrawAdapterInterface } from 'src/account/domain/core/adapter/withdraw-adapter.interface';
 import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { AccountNotFoundException } from 'src/account/domain/core/exception/account-not-found.exception';
-import type { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
 import type { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import type { WithdrawValidatorInterface } from 'src/account/domain/core/validator/withdraw-validator.interface';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';

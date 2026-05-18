@@ -2,9 +2,6 @@ import { AccountModel } from "generated/prisma/models";
 import { BalanceQueryService } from "src/account/application/core/service/balance-query.service";
 import { AccountManagerInterface } from "src/account/domain/core/contract/account-manager.interface";
 
-
-
-
 describe('BalanceQueryService', () => {
     let balanceQueryService: BalanceQueryService;
     let accountManager: AccountManagerInterface;

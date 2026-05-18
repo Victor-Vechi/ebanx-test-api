@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Account } from 'generated/prisma/client';
 import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import { InsufficientFundsException } from '../exception/insufficient-funds.exception';

@@ -4,8 +4,6 @@ import { BalanceQueryInterface } from "src/account/domain/core/contract/balance-
 import { AccountNotFoundException } from "src/account/domain/core/exception/account-not-found.exception";
 import { DependencyInjectionEnum } from "src/shared/domain/dependency-injection/dependency-injection.enum";
 
-
-
 @Injectable()
 export class BalanceQueryService implements BalanceQueryInterface {
   constructor(
