@@ -10,18 +10,18 @@ import {
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import type { EventHandlerInterface } from 'src/account/domain/core/handler/event-handler.interface';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
+import type { EventManagerInterface } from 'src/account/domain/core/contract/event-manager.interface';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
-import type { AccountManagerInterface } from 'src/account/domain/core/service/account-manager.interface';
+import type { BalanceQueryInterface } from 'src/account/domain/core/contract/balance-query.interface';
 
 @Controller()
 export class AccountController {
   constructor(
-    @Inject(DependencyInjectionEnum.EVENT_HANDLER)
-    private readonly eventManager: EventHandlerInterface,
-    @Inject(DependencyInjectionEnum.ACCOUNT_MANAGER)
-    private readonly accountManager: AccountManagerInterface,
+    @Inject(DependencyInjectionEnum.EVENT_MANAGER)
+    private readonly eventManager: EventManagerInterface,
+    @Inject(DependencyInjectionEnum.BALANCE_QUERY)
+    private readonly balanceQuery: BalanceQueryInterface,
   ) {}
 
   @Post('/event')
@@ -44,7 +44,7 @@ export class AccountController {
     @Query('account_id') accountId: string,
   ): Promise<void> {
     try {
-      const balance = await this.accountManager.accountBalance(accountId);
+      const balance = await this.balanceQuery.getAccountBalance(accountId);
       res.status(HttpStatus.OK).send(balance);
     } catch (error) {
       console.error('Error fetching account balance:', error);
@@ -55,7 +55,7 @@ export class AccountController {
   @Post('/reset')
   async reset(@Res() res: Response): Promise<void> {
     try {
-      await this.accountManager.resetTable();
+      await this.balanceQuery.reset();
       res.sendStatus(HttpStatus.OK);
     } catch (error) {
       console.error('Error resetting account table:', error);

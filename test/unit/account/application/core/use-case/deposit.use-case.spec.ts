@@ -1,37 +1,38 @@
 import { DepositAdapter } from 'src/account/application/core/adapter/deposit.adapter';
-import { AccountTransactionService } from 'src/account/application/core/service/account-transaction.service';
-import { DepositUseCase } from 'src/account/application/core/use-cases/deposit.use-case';
-import { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
+import { AccountTransactionService } from 'src/account/domain/core/service/account-transaction.service';
+import { DepositUseCase } from 'src/account/application/core/use-case/deposit.use-case';
+import { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
 import { DepositAdapterInterface } from 'src/account/domain/core/adapter/deposit-adapter.interface';
-import { AccountRepositoryInterface } from 'src/account/domain/core/repository/account-repository.interface';
-import { AccountTransactionInterface } from 'src/account/domain/core/service/account-transaction.interface';
+import { AccountTransactionInterface } from 'src/account/domain/core/contract/account-transaction.interface';
 import { DepositValidatorInterface } from 'src/account/domain/core/validator/deposit-validator.interface';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { Account } from 'generated/prisma/client';
 import { DepositValidator } from 'src/account/application/core/validator/deposit.validator';
+import { AccountManagerInterface } from 'src/account/domain/core/contract/account-manager.interface';
 
 describe('DepositUseCase', () => {
   let depositUseCase: DepositUseCaseInterface;
   let accountTransactionService: AccountTransactionInterface;
   let depositAdapter: DepositAdapterInterface;
-  let accountRepository: AccountRepositoryInterface;
+  let accountManager: AccountManagerInterface;
   let depositValidator: DepositValidatorInterface;
 
   beforeEach(() => {
     accountTransactionService = new AccountTransactionService();
     depositAdapter = new DepositAdapter();
     depositValidator = new DepositValidator();
-    accountRepository = {
-      findById: jest.fn(),
-      saveAll: jest.fn(),
-      save: jest.fn(),
+    accountManager = {
+      getDestinationAccount: jest.fn(),
+      saveAccount: jest.fn(),
+      getAccount: jest.fn(),
+      saveTransaction: jest.fn(),
       resetTable: jest.fn(),
     };
 
     depositUseCase = new DepositUseCase(
       accountTransactionService,
+      accountManager,
       depositAdapter,
-      accountRepository,
       depositValidator,
     );
   });
@@ -49,7 +50,9 @@ describe('DepositUseCase', () => {
       updatedAt: new Date(),
     };
 
-    (accountRepository.findById as jest.Mock).mockResolvedValue(account);
+    (accountManager.getDestinationAccount as jest.Mock).mockResolvedValue(
+      account,
+    );
 
     const expectedResponse = {
       destination: {
@@ -62,7 +65,9 @@ describe('DepositUseCase', () => {
 
     expect(response).toEqual(expectedResponse);
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.destination);
+    expect(accountManager.getDestinationAccount).toHaveBeenCalledWith(
+      event.destination,
+    );
   });
 
   it('Should execute deposit use case with new account', async () => {
@@ -71,7 +76,12 @@ describe('DepositUseCase', () => {
       destination: '1',
       amount: 100,
     };
-    (accountRepository.findById as jest.Mock).mockResolvedValue(null);
+    (accountManager.getDestinationAccount as jest.Mock).mockResolvedValue({
+      id: event.destination,
+      balance: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
     const expectedResponse = {
       destination: {
         id: '1',
@@ -81,6 +91,8 @@ describe('DepositUseCase', () => {
     const response = await depositUseCase.execute(event);
     expect(response).toEqual(expectedResponse);
 
-    expect(accountRepository.findById).toHaveBeenCalledWith(event.destination);
+    expect(accountManager.getDestinationAccount).toHaveBeenCalledWith(
+      event.destination,
+    );
   });
 });

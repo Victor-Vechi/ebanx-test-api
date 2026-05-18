@@ -1,11 +1,11 @@
-import { EventHandler } from 'src/account/application/core/handler/event.handler';
-import { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
-import { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
-import { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
-import { EventHandlerInterface } from 'src/account/domain/core/handler/event-handler.interface';
+import { EventManagerService } from 'src/account/application/core/service/event-manager.service';
+import { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
+import { TransferUseCaseInterface } from 'src/account/domain/core/use-case/transfer-use-case.interface';
+import { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withdraw-use-case.interface';
+import { EventManagerInterface } from 'src/account/domain/core/contract/event-manager.interface';
 
-describe('EventHandler', () => {
-  let eventHandler: EventHandlerInterface;
+describe('EventManagerService', () => {
+  let eventManager: EventManagerInterface;
   let depositUseCase: DepositUseCaseInterface;
   let withdrawUseCase: WithdrawUseCaseInterface;
   let transferUseCase: TransferUseCaseInterface;
@@ -22,7 +22,7 @@ describe('EventHandler', () => {
       execute: jest.fn(),
     };
 
-    eventHandler = new EventHandler(
+    eventManager = new EventManagerService(
       depositUseCase,
       withdrawUseCase,
       transferUseCase,
@@ -36,7 +36,7 @@ describe('EventHandler', () => {
       amount: 100,
     };
 
-    eventHandler.processEvent(event);
+    eventManager.processEvent(event);
     expect(depositUseCase.execute).toHaveBeenCalledWith(event);
   });
 
@@ -47,7 +47,7 @@ describe('EventHandler', () => {
       amount: 50,
     };
 
-    eventHandler.processEvent(event);
+    eventManager.processEvent(event);
     expect(withdrawUseCase.execute).toHaveBeenCalledWith(event);
   });
 
@@ -59,7 +59,7 @@ describe('EventHandler', () => {
       amount: 50,
     };
 
-    eventHandler.processEvent(event);
+    eventManager.processEvent(event);
     expect(transferUseCase.execute).toHaveBeenCalledWith(event);
   });
 
@@ -70,7 +70,7 @@ describe('EventHandler', () => {
       amount: 100,
     };
 
-    await expect(eventHandler.processEvent(event)).rejects.toThrow(
+    await expect(eventManager.processEvent(event)).rejects.toThrow(
       `Unknown event type: ${event.type}`,
     );
   });

@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
 import { TransferValidatorInterface } from 'src/account/domain/core/validator/transfer-validator.interface';
 
 @Injectable()

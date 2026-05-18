@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { DepositUseCaseInterface } from 'src/account/domain/core/action/deposit-use-case.interface';
-import type { TransferUseCaseInterface } from 'src/account/domain/core/action/transfer-use-case.interface';
-import type { WithdrawUseCaseInterface } from 'src/account/domain/core/action/withdraw-use-case.interface';
-import { EventDto } from 'src/account/domain/core/dto/event.dto';
-import { EventResponseInterface } from 'src/account/domain/core/event/event-response.interface';
-import { EventType } from 'src/account/domain/core/event/event-type.enum';
+import type { DepositUseCaseInterface } from 'src/account/domain/core/use-case/deposit-use-case.interface';
+import type { TransferUseCaseInterface } from 'src/account/domain/core/use-case/transfer-use-case.interface';
+import type { WithdrawUseCaseInterface } from 'src/account/domain/core/use-case/withdraw-use-case.interface';
+import { EventDto } from 'src/account/domain/core/dto/request/event.dto';
+import { EventType } from 'src/account/domain/core/enum/event-type.enum';
 import { EventInvalidException } from 'src/account/domain/core/exception/event-invalid.exception';
-import { EventHandlerInterface } from 'src/account/domain/core/handler/event-handler.interface';
+import { EventManagerInterface } from 'src/account/domain/core/contract/event-manager.interface';
 import { DependencyInjectionEnum } from 'src/shared/domain/dependency-injection/dependency-injection.enum';
+import { EventResponseDto } from 'src/account/domain/core/dto/response/event-response.dto';
 
 @Injectable()
-export class EventHandler implements EventHandlerInterface {
+export class EventManagerService implements EventManagerInterface {
   constructor(
     @Inject(DependencyInjectionEnum.DEPOSIT_CASE)
     private readonly depositAction: DepositUseCaseInterface,
@@ -20,7 +20,7 @@ export class EventHandler implements EventHandlerInterface {
     private readonly transferAction: TransferUseCaseInterface,
   ) {}
 
-  async processEvent(event: EventDto): Promise<EventResponseInterface> {
+  async processEvent(event: EventDto): Promise<EventResponseDto> {
     switch (event.type.toLowerCase()) {
       case EventType.DEPOSIT:
         return await this.depositAction.execute(event);
